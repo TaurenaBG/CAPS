@@ -15,11 +15,7 @@ namespace CAPS.Common
 
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            // Simulate email sending 
-            Console.WriteLine($"Sending email to: {email}");
-            Console.WriteLine($"Subject: {subject}");
-            Console.WriteLine($"Message: {htmlMessage}");
-
+            
             // Return a completed task 
             return Task.CompletedTask;
         }

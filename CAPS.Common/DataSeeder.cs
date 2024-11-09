@@ -26,12 +26,12 @@ namespace CAPS.Common
                 Email = "admin@admin.com",
                
             };
-
-            var result = await userManager.CreateAsync(adminUser, "admin123");
+                                                                   
+            var result = await userManager.CreateAsync(adminUser, "admin123"); // Admin account password
 
             if (result.Succeeded)
             {
-                // Assign the Admin role to the user
+               
                 await userManager.AddToRoleAsync(adminUser, "Admin");
             }
         }
