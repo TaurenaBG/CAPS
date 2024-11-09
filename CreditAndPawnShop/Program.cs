@@ -37,31 +37,30 @@ namespace CreditAndPawnShop
 
             var app = builder.Build();
 
-            using  (var scope = app.Services.CreateScope())
+            using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = services.GetRequiredService<UserManager<AppUser>>();
 
-                
+                // Ensure the roles are created first
                 if (!await roleManager.RoleExistsAsync("Admin"))
                 {
-                    
                     await DataSeeder.SeedAdminRoleAsync(roleManager);
                 }
 
-                
                 if (!await roleManager.RoleExistsAsync("User"))
                 {
-                    
                     await DataSeeder.SeedUserRoleAsync(roleManager);
                 }
 
-                
-                var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                // Seed the admin user if it doesn't already exist
                 if (!await userManager.Users.AnyAsync(u => u.UserName == "admin@admin.com"))
                 {
                     await DataSeeder.SeedAdminUserAsync(userManager, roleManager);
                 }
+
+                
             }
 
             // Configure the HTTP request pipeline.

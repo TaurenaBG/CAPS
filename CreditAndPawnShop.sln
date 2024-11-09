@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditAndPawnShop", "CreditAndPawnShop\CreditAndPawnShop.csproj", "{FD5A27F9-5C49-47EA-82CE-850E20704271}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreditAndPawnShop", "CreditAndPawnShop\CreditAndPawnShop.csproj", "{FD5A27F9-5C49-47EA-82CE-850E20704271}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CAPS.DataModels", "CAPS.DataModels\CAPS.DataModels.csproj", "{4218A218-D7A9-4341-BB0C-65CB06FB2C6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CAPS.DataModels", "CAPS.DataModels\CAPS.DataModels.csproj", "{4218A218-D7A9-4341-BB0C-65CB06FB2C6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CAPS.Common", "CAPS.Common\CAPS.Common.csproj", "{1291BD2F-C7A7-419B-ACB2-7F714244880A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CAPS.Common", "CAPS.Common\CAPS.Common.csproj", "{1291BD2F-C7A7-419B-ACB2-7F714244880A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CAPS.ViewModels", "CAPS.ViewModels\CAPS.ViewModels.csproj", "{00A15DD4-B01D-42FF-A278-691620CA8B99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CAPS.ViewModels", "CAPS.ViewModels\CAPS.ViewModels.csproj", "{00A15DD4-B01D-42FF-A278-691620CA8B99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CAPS.Global", "CAPS.Global\CAPS.Global.csproj", "{319DCEF0-7B4D-4F40-B89F-C2DB24723ED7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{00A15DD4-B01D-42FF-A278-691620CA8B99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00A15DD4-B01D-42FF-A278-691620CA8B99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00A15DD4-B01D-42FF-A278-691620CA8B99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{319DCEF0-7B4D-4F40-B89F-C2DB24723ED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{319DCEF0-7B4D-4F40-B89F-C2DB24723ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{319DCEF0-7B4D-4F40-B89F-C2DB24723ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{319DCEF0-7B4D-4F40-B89F-C2DB24723ED7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
