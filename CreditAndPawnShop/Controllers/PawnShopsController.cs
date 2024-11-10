@@ -40,5 +40,24 @@ namespace CreditAndPawnShop.Controllers
             
             return View(pawnShop);
         }
+        public async Task<IActionResult> Details(int pawnShopId)
+        {
+            var pawnShopViewModel = await _pawnShopService.GetPawnShopWithItemsAsync(pawnShopId);
+            if (pawnShopViewModel == null)
+            {
+                return NotFound();
+            }
+            return View(pawnShopViewModel);  
+        }
+
+        
+        public IActionResult OpenMap(string locationUrl)
+        {
+            if (string.IsNullOrEmpty(locationUrl))
+            {
+                return BadRequest("Location URL is not provided.");
+            }
+            return Redirect(locationUrl);  
+        }
     }
 }

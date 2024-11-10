@@ -24,7 +24,8 @@ namespace CAPS.Data
             {
                 Id = ps.Id,
                 Name = ps.Name,
-                City = ps.City
+                City = ps.City,
+                 LocationUrl = ps.LocationUrl
             }).ToList();
 
             return pawnShopsViewModel;

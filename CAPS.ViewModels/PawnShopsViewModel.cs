@@ -11,6 +11,8 @@ namespace CAPS.ViewModels
         public int Id { get; set; }
         public string Name { get; set; }
         public string City { get; set; }
+
+        public string LocationUrl { get; set; }
         public List<PawnedItemViewModel> PawnedItems { get; set; } = new List<PawnedItemViewModel>();
     }
 }

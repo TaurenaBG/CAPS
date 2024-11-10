@@ -1,0 +1,26 @@
+﻿@using CAPS.ViewModels
+@model CAPS.ViewModels.PawnShopsViewModel
+
+<h1>@Model.Name - @Model.City</h1>
+
+<h3>Pawned Items</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item Name</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PawnedItems)
+        {
+            <tr>
+                <td>@item.ItemName</td>
+                <td>@item.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Optionally, you can add a back button to return to the index -->
+<a href="@Url.Action("Index", "PawnShops")" class="btn btn-primary">Back to List</a>
