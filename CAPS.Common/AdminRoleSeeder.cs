@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CAPS.Common
 {
-    public class DataSeeder
+    public class AdminRoleSeeder
     {
 
 

@@ -8,9 +8,9 @@ namespace CAPS.DataModels
         {
         }
 
-        public AppUser(string userName) : base(userName)
-        {
-        }
+        //public AppUser(string userName) : base(userName)
+        //{
+        //}
 
         public string? FullName { get; set; }
 

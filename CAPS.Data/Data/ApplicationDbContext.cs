@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace CreditAndPawnShop.Data
+namespace CAPS.Data.Data
 {
     public class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRole, string>
     {

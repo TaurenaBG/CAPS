@@ -2,16 +2,16 @@
 
 #nullable disable
 
-namespace CreditAndPawnShop.Data.Migrations
+namespace CAPS.Data.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class addmigrationthree : Migration
+    public partial class custumUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "FullName",
+                name: "ReturnUrl",
                 table: "AspNetUsers",
                 type: "nvarchar(max)",
                 nullable: true);
@@ -21,7 +21,7 @@ namespace CreditAndPawnShop.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "FullName",
+                name: "ReturnUrl",
                 table: "AspNetUsers");
         }
     }

@@ -1,10 +1,12 @@
-using CreditAndPawnShop.Data;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CAPS.DataModels;
 using CAPS.Common;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using CAPS.Data.Data;
+using CAPS.Data;
+using CAPS.Services;
 
 namespace CreditAndPawnShop
 {
@@ -19,7 +21,7 @@ namespace CreditAndPawnShop
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-            
+
 
             builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
             {
@@ -31,6 +33,7 @@ namespace CreditAndPawnShop
                  .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            builder.Services.AddScoped<IPawnShopService, PawnShopService>();
             builder.Services.AddTransient<IEmailSender, EmailSender>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
@@ -46,18 +49,18 @@ namespace CreditAndPawnShop
                 // Ensure the roles are created first
                 if (!await roleManager.RoleExistsAsync("Admin"))
                 {
-                    await DataSeeder.SeedAdminRoleAsync(roleManager);
+                    await AdminRoleSeeder.SeedAdminRoleAsync(roleManager);
                 }
 
                 if (!await roleManager.RoleExistsAsync("User"))
                 {
-                    await DataSeeder.SeedUserRoleAsync(roleManager);
+                    await AdminRoleSeeder.SeedUserRoleAsync(roleManager);
                 }
 
                 // Seed the admin user if it doesn't already exist
                 if (!await userManager.Users.AnyAsync(u => u.UserName == "admin@admin.com"))
                 {
-                    await DataSeeder.SeedAdminUserAsync(userManager, roleManager);
+                    await AdminRoleSeeder.SeedAdminUserAsync(userManager, roleManager);
                 }
 
                 

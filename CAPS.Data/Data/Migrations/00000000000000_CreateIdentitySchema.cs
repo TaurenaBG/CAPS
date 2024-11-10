@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace CreditAndPawnShop.Data.Migrations
+namespace CAPS.Data.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

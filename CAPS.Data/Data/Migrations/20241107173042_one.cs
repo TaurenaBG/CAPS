@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace CreditAndPawnShop.Data.Migrations
+namespace CAPS.Data.Data.Migrations
 {
     /// <inheritdoc />
     public partial class one : Migration

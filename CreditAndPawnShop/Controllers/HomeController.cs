@@ -1,4 +1,5 @@
 using CAPS.DataModels;
+using CAPS.Services;
 using CreditAndPawnShop.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,15 +11,23 @@ namespace CreditAndPawnShop.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<AppUser> _userManager;
+       
 
-        public HomeController(ILogger<HomeController> logger, UserManager<AppUser> userManager)
+        public HomeController(ILogger<HomeController> logger,
+            UserManager<AppUser> userManager
+           )
         {
             _logger = logger;
             _userManager = userManager;
+            
         }
 
-        public IActionResult Index()
+        
+        
+
+        public async Task<IActionResult> Index()
         {
+            
             return View();
         }
 
