@@ -1,34 +1,68 @@
 ﻿@using CAPS.ViewModels
 @model IEnumerable<CAPS.ViewModels.PawnShopsViewModel>
 
-<h1>@ViewData["Title"]</h1>
+<h1 class="text-center text-success">@ViewData["Title"]</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Details</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var pawnShop in Model)
-        {
+<div class="container my-5">
+    <table class="table table-striped table-hover shadow-sm">
+        <thead class="bg-success text-white">
             <tr>
-                <td>
-                    
-                    <a href="@Url.Action("Details", "PawnShops", new { pawnShopId = pawnShop.Id })">@pawnShop.Name</a>
-                </td>
-                <td>
-                    
-                    <a href="@Url.Action("OpenMap", "PawnShops", new { locationUrl = pawnShop.LocationUrl })" target="_blank">
-                        @pawnShop.City
-                    </a>
-                </td>
-                <td>
-                    <a href="@Url.Action("Details", "PawnShops", new { pawnShopId = pawnShop.Id })">View Details</a>
-                </td>
+                <th>Name</th>
+                <th>Location</th>
+                
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var pawnShop in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="@Url.Action("Details", "PawnShops", new { pawnShopId = pawnShop.Id })" class="text-success hover-underline-animation">
+                            @pawnShop.Name
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("OpenMap", "PawnShops", new { locationUrl = pawnShop.LocationUrl })" target="_blank" class="text-success hover-underline-animation">
+                            @pawnShop.City
+                        </a>
+                    </td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Styles {
+    <style>
+        .btn-outline-success {
+            color: #28a745;
+            border-color: #28a745;
         }
-    </tbody>
-</table>
+
+            .btn-outline-success:hover {
+                background-color: #28a745;
+                color: white;
+            }
+
+        .hover-underline-animation {
+            position: relative;
+            text-decoration: none;
+        }
+
+            .hover-underline-animation::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                background-color: #28a745;
+                transition: width .3s ease;
+                bottom: -2px;
+                left: 0;
+            }
+
+            .hover-underline-animation:hover::after {
+                width: 100%;
+            }
+    </style>
+}

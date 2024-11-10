@@ -8,9 +8,9 @@ namespace CAPS.DataModels
         public decimal Amount { get; set; }
         public DateTime PaymentDate { get; set; }
 
+        public bool IsDeleted { get; set; }
 
 
-        
         public int? LoanId { get; set; } // Nullable
         [ForeignKey(nameof(LoanId))]
         public Loan Loan { get; set; }

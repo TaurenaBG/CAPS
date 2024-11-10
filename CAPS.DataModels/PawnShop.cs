@@ -13,6 +13,7 @@ namespace CAPS.DataModels
         [Required]
         public string City { get; set; } = null!;
         public string? LocationUrl { get; set; }
+        public bool IsDeleted { get; set; }
 
         public List<Loan> Loans { get; set; } = new List<Loan>();
         public List<PawnItem> PawnedItems { get; set; } = new List<PawnItem>();

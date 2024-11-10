@@ -8,9 +8,7 @@ namespace CAPS.DataModels
         {
         }
 
-        //public AppUser(string userName) : base(userName)
-        //{
-        //}
+        public bool IsDeleted { get; set; }
 
         public string? FullName { get; set; }
 
