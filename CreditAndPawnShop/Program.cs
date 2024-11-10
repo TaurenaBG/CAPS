@@ -34,12 +34,7 @@ namespace CreditAndPawnShop
                  .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(options =>
-            {
-                options.LoginPath = "/Account/Login";  
-                options.AccessDeniedPath = "/Account/AccessDenied";  
-            });
+            
 
             builder.Services.AddAuthorization(options =>
             {
