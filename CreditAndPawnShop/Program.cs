@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using CAPS.Data.Data;
 using CAPS.Data;
 using CAPS.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace CreditAndPawnShop
 {
@@ -32,6 +33,18 @@ namespace CreditAndPawnShop
             })
                  .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";  
+                options.AccessDeniedPath = "/Account/AccessDenied";  
+            });
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+            });
 
             builder.Services.AddScoped<IPawnShopService, PawnShopService>();
             builder.Services.AddTransient<IEmailSender, EmailSender>();
@@ -82,7 +95,7 @@ namespace CreditAndPawnShop
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

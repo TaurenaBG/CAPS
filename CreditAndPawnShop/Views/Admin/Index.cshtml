@@ -1,0 +1,22 @@
+﻿@model IEnumerable<CAPS.ViewModels.PawnShopsViewModel>
+
+<h2>Pawn Shops List</h2>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>City</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var pawnShop in Model)
+    {
+        <tr>
+            <td>@pawnShop.Name</td>
+            <td>@pawnShop.City</td>
+            <td>
+                <a href="@Url.Action("Edit", "Admin", new { id = pawnShop.Id })">Edit</a> |
+                <a href="@Url.Action("Delete", "Admin", new { id = pawnShop.Id })">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
+<a href="@Url.Action("Create", "Admin")">Add New PawnShop</a>
