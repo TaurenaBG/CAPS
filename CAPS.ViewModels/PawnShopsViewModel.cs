@@ -1,18 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.ComponentModel.DataAnnotations;
+using static CAPS.Global.GlobalConstants;
 namespace CAPS.ViewModels
 {
     public class PawnShopsViewModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string City { get; set; }
+        [Required(ErrorMessage = IsRequiredMsg)]
+        [MaxLength(PawnShopNameMaxLenght, ErrorMessage = PawnShopNameMaxLenghtErrorMsg)]
+        [MinLength(PawnShopNameMinLenght, ErrorMessage = PawnShopNameMinLenghtErrorMsg)]
+        public string Name { get; set; } = null!;
 
-        public string LocationUrl { get; set; }
+        [Required(ErrorMessage = IsRequiredMsg)]
+        [MaxLength(PawnShopCityMaxLenght, ErrorMessage = PawnShopCityMaxLenghtErrorMsg)]
+        [MinLength(PawnShopCityMinLenght, ErrorMessage = PawnShopCityMinLenghtErrorMsg)]
+        public string City { get; set; } = null !;
+
+        public string? LocationUrl { get; set; }
         public List<PawnedItemViewModel> PawnedItems { get; set; } = new List<PawnedItemViewModel>();
     }
 }
