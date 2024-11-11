@@ -12,7 +12,7 @@ namespace CAPS.DataModels
         public string Name { get; set; } = null!;
 
         [Required(ErrorMessage = IsRequiredMsg)]
-
+        [MaxLength(PawnShopCityMaxLenght, ErrorMessage =PawnShopCityMaxLenghtErrorMsg)]
         public string City { get; set; } = null!;
         public string? LocationUrl { get; set; }
         public bool IsDeleted { get; set; }
