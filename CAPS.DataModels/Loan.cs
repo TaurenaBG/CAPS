@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using CAPS.Global;
+using static CAPS.Global.GlobalConstants;
 
 namespace CAPS.DataModels
 {
@@ -9,15 +10,15 @@ namespace CAPS.DataModels
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = IsRequiredMsg)]
         public decimal Amount { get; set; }
 
         public LoanStatus LoanStatus { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = IsRequiredMsg)]
         public DateTime IssuedDate { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = IsRequiredMsg)]
         public DateTime DueDate { get; set; }
 
         public bool IsDeleted { get; set; }

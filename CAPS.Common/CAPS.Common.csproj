@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CAPS.DataModels\CAPS.DataModels.csproj" />
+    <ProjectReference Include="..\CAPS.Data\CAPS.Data.csproj" />
     <ProjectReference Include="..\CAPS.Services\CAPS.Services.csproj" />
 	  
   </ItemGroup>

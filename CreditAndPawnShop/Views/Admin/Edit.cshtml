@@ -1,10 +1,34 @@
 ﻿@model CAPS.ViewModels.PawnShopsViewModel
 
-<h2>Edit PawnShop</h2>
-<form method="post">
-    <input type="text" name="Name" value="@Model.Name" />
-    <input type="text" name="City" value="@Model.City" />
-    <input type="text" name="LocationUrl" value="@Model.LocationUrl" />
-    <button type="submit">Save Changes</button>
+<h2 class="page-title">Edit Pawn Shop</h2>
+
+<form method="post" class="edit-form">
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" name="Name" id="Name" class="form-control custom-input" value="@Model.Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="City">City</label>
+        <input type="text" name="City" id="City" class="form-control custom-input" value="@Model.City" />
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="LocationUrl">Location URL</label>
+        <input type="text" name="LocationUrl" id="LocationUrl" class="form-control custom-input" value="@Model.LocationUrl" />
+        <span asp-validation-for="LocationUrl" class="text-danger"></span>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn custom-btn">Save Changes</button>
+        <a href="javascript:window.location.href='@Url.Action("Index", "PawnShops")';" class="btn btn-secondary">Cancel</a>
+
+    </div>
 </form>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/edit-pawnshop.css" />
+}
 

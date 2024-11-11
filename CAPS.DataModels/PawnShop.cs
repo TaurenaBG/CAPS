@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using static CAPS.Global.GlobalConstants;
 namespace CAPS.DataModels
 {
     public class PawnShop
@@ -7,10 +7,12 @@ namespace CAPS.DataModels
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = IsRequiredMsg)]
+        [MaxLength(PawnShopNameMaxLenght, ErrorMessage = PawnShopNameMaxLenghtErrorMsg)]
         public string Name { get; set; } = null!;
 
-        [Required]
+        [Required(ErrorMessage = IsRequiredMsg)]
+
         public string City { get; set; } = null!;
         public string? LocationUrl { get; set; }
         public bool IsDeleted { get; set; }

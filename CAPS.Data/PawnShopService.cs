@@ -57,7 +57,8 @@ namespace CAPS.Data
                 {
                     Id = pi.Id,
                     ItemName = pi.Name,
-                    Value = pi.Value
+                    Value = pi.Value,
+                    Description = pi.Description
                 }).ToList()
             };
 

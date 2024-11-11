@@ -1,12 +1,20 @@
 ﻿@model CAPS.ViewModels.PawnShopsViewModel
 
-<h2>Delete PawnShop</h2>
-<form method="post">
-    <div>Are you sure you want to delete this PawnShop?</div>
-    <div>
-        <strong>@Model.Name</strong> - @Model.City
+<h2 class="page-title">Delete Pawn Shop</h2>
+
+<form method="post" class="delete-form">
+    <div class="delete-warning">
+        <p>Are you sure you want to delete this PawnShop?</p>
     </div>
-    <button type="submit">Yes, Delete</button>
+
+    <div class="delete-info">
+        <p><strong>@Model.Name</strong> - @Model.City</p>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn custom-btn delete-btn">Yes, Delete</button>
+        <a href="@Url.Action("Index", "PawnShops")" class="btn btn-secondary cancel-btn">Cancel</a>
+    </div>
 </form>
-<a href="@Url.Action("Index", "PawnShops")">Cancel</a>
+
 

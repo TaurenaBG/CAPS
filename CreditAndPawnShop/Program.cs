@@ -41,6 +41,7 @@ namespace CreditAndPawnShop
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
             });
 
+            builder.Services.AddScoped<IPawnShopAdminService, PawnShopAdminService>();
             builder.Services.AddScoped<IPawnShopService, PawnShopService>();
             builder.Services.AddTransient<IEmailSender, EmailSender>();
             builder.Services.AddControllersWithViews();
@@ -53,8 +54,10 @@ namespace CreditAndPawnShop
                 var services = scope.ServiceProvider;
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                 var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                var context = services.GetRequiredService<ApplicationDbContext>();
 
-                // Ensure the roles are created first
+                await PawnedItemSeeder.SeedPawnedItemsAsync(context, userManager);
+
                 if (!await roleManager.RoleExistsAsync("Admin"))
                 {
                     await AdminRoleSeeder.SeedAdminRoleAsync(roleManager);
@@ -65,7 +68,7 @@ namespace CreditAndPawnShop
                     await AdminRoleSeeder.SeedUserRoleAsync(roleManager);
                 }
 
-                // Seed the admin user if it doesn't already exist
+                
                 if (!await userManager.Users.AnyAsync(u => u.UserName == "admin@admin.com"))
                 {
                     await AdminRoleSeeder.SeedAdminUserAsync(userManager, roleManager);
