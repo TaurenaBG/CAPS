@@ -25,6 +25,8 @@ namespace CAPS.Common
             {
                 UserName = "admin@admin.com",
                 Email = "admin@admin.com",
+                CurrencyAmount = 15000,  
+                FullName = "Owner"        
 
             };
 
@@ -35,7 +37,7 @@ namespace CAPS.Common
 
                 await userManager.AddToRoleAsync(adminUser, "Admin");
             }
+           
         }
-
     }
 }

@@ -15,7 +15,7 @@ namespace CAPS.Data
             _context = context;
         }
 
-        
+
         public async Task<List<PawnShopsViewModel>> GetAllPawnShopsAsync()
         {
             var pawnShops = await _context.PawnShops.ToListAsync();
@@ -23,12 +23,14 @@ namespace CAPS.Data
             var pawnShopsViewModel = pawnShops
                 .Where(ps => !ps.IsDeleted)
                 .Select(ps => new PawnShopsViewModel
-            {
-                Id = ps.Id,
-                Name = ps.Name,
-                City = ps.City,
-                LocationUrl = ps.LocationUrl
-            }).ToList();
+                {
+                    Id = ps.Id,
+                    Name = ps.Name,
+                    City = ps.City,
+                    LocationUrl = ps.LocationUrl,
+
+
+                }).ToList();
 
             return pawnShopsViewModel;
         }
@@ -44,13 +46,13 @@ namespace CAPS.Data
             if (pawnShop == null)
                 return null;
 
-            
+
             var pawnShopViewModel = new PawnShopsViewModel
             {
                 Id = pawnShop.Id,
                 Name = pawnShop.Name,
                 City = pawnShop.City,
-                
+
                 PawnedItems = pawnShop.PawnedItems
                 .Where(ps => !ps.IsDeleted)
                 .Select(pi => new PawnedItemViewModel
@@ -58,7 +60,9 @@ namespace CAPS.Data
                     Id = pi.Id,
                     ItemName = pi.Name,
                     Value = pi.Value,
-                    Description = pi.Description
+                    Description = pi.Description,
+                    Category = pi.Category
+
                 }).ToList()
             };
 

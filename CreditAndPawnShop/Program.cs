@@ -8,6 +8,7 @@ using CAPS.Data.Data;
 using CAPS.Data;
 using CAPS.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using CAPS.Global;
 
 namespace CreditAndPawnShop
 {
@@ -34,7 +35,7 @@ namespace CreditAndPawnShop
                  .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            
+
 
             builder.Services.AddAuthorization(options =>
             {
@@ -68,14 +69,15 @@ namespace CreditAndPawnShop
                     await AdminRoleSeeder.SeedUserRoleAsync(roleManager);
                 }
 
-                
+
                 if (!await userManager.Users.AnyAsync(u => u.UserName == "admin@admin.com"))
                 {
                     await AdminRoleSeeder.SeedAdminUserAsync(userManager, roleManager);
                 }
 
-                
+
             }
+            
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -102,8 +104,10 @@ namespace CreditAndPawnShop
             app.MapRazorPages();
 
             app.Run();
-        }
-    }
 
-    
+           
+        }
+
+
+    }
 }

@@ -68,7 +68,8 @@ namespace CAPS.Data
                     Id = ps.Id,
                     Name = ps.Name,
                     City = ps.City,
-                    LocationUrl = ps.LocationUrl
+                    LocationUrl = ps.LocationUrl,
+
                 })
                 .FirstOrDefaultAsync();
 

@@ -1,5 +1,6 @@
 ﻿using CAPS.Data.Data;
 using CAPS.DataModels;
+using CAPS.Global;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +27,10 @@ namespace CAPS.Common
                             Description = "24 carats gold",
                             Value = 500,
                             PawnShopId = 1, // First pawn shop
-                            AppUserId = adminUser.Id
+                            AppUserId = adminUser.Id,
+                            Category = ItemCategory.Jewelry, 
+                            PawnDate = DateTime.Now, 
+                             DueDate = DateTime.Now.AddDays(30) 
                         },
                         new PawnItem
                         {
@@ -34,7 +38,10 @@ namespace CAPS.Common
                             Description = "MacBook Pro",
                             Value = 1500,
                             PawnShopId = 2, // Second pawn shop
-                            AppUserId = adminUser.Id
+                            AppUserId = adminUser.Id,
+                            Category = ItemCategory.Electronics,
+                            PawnDate = DateTime.Now,
+                             DueDate = DateTime.Now.AddDays(30)
                         },
                         new PawnItem
                         {
@@ -42,7 +49,10 @@ namespace CAPS.Common
                             Description = "Rolex",
                             Value = 1200,
                             PawnShopId = 3, // Third pawn shop
-                            AppUserId = adminUser.Id
+                            AppUserId = adminUser.Id,
+                            Category = ItemCategory.Jewelry,
+                            PawnDate = DateTime.Now,
+                             DueDate = DateTime.Now.AddDays(30)
                         },
                         new PawnItem
                         {
@@ -50,11 +60,14 @@ namespace CAPS.Common
                             Description = "Bmw 530",
                             Value = 30000,
                             PawnShopId = 1, // First pawn shop
-                            AppUserId = adminUser.Id
+                            AppUserId = adminUser.Id,
+                            Category = ItemCategory.Vehicles,
+                            PawnDate = DateTime.Now,
+                             DueDate = DateTime.Now.AddDays(30)
                         }
                     };
 
-                    // Add the items to the context
+                    
                     context.PawnItems.AddRange(pawnedItems);
                     await context.SaveChangesAsync();
                 }

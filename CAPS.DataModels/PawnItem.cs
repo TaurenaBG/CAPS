@@ -19,6 +19,9 @@ namespace CAPS.DataModels
         [Required(ErrorMessage = IsRequiredMsg)]
         public decimal Value { get; set; }
 
+        [Required]
+        public ItemCategory Category { get; set; }
+
 
         [Required(ErrorMessage = IsRequiredMsg)]
         public DateTime PawnDate { get; set; }
