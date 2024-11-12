@@ -13,6 +13,8 @@ namespace CAPS.DataModels
         [Required(ErrorMessage = IsRequiredMsg)]
         public decimal Amount { get; set; }
 
+        public int LoanTerm { get; set; }
+
         public LoanStatus LoanStatus { get; set; }
 
         [Required(ErrorMessage = IsRequiredMsg)]

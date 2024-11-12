@@ -1,9 +1,11 @@
 ﻿using CAPS.DataModels;
+using CAPS.Global;
 using CAPS.Services;
 using CAPS.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CreditAndPawnShop.Controllers
 {
@@ -102,6 +104,8 @@ namespace CreditAndPawnShop.Controllers
             await _pawnShopAdminService.DeletePawnShopAsync(id);
             return RedirectToAction("Index", "PawnShops");
         }
+
+        
     }
 
 }

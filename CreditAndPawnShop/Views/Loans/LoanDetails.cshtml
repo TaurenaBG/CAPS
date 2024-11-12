@@ -1,0 +1,49 @@
+﻿@model CAPS.DataModels.Loan
+
+@{
+    ViewData["Title"] = $"Loan Details for {Model.AppUser.FullName}";
+}
+
+<h2 class="page-title">Loan Details</h2>
+
+<div class="loan-details">
+    <div class="form-group">
+        <label>Loan Amount:</label>
+        <p>@Model.Amount</p>
+    </div>
+
+    <div class="form-group">
+        <label>Loan Term (months):</label>
+        <p>@Model.LoanTerm</p>
+    </div>
+
+
+    <div class="form-group">
+        <label>Status:</label>
+        <p>@Model.LoanStatus</p>
+    </div>
+
+    <div class="form-group">
+        <label>Loan Date:</label>
+        <p>@Model.IssuedDate.ToShortDateString()</p>
+    </div>
+
+    <div class="form-group">
+        <label>Due Date:</label>
+        <p>@Model.DueDate.ToShortDateString()</p>
+    </div>
+
+    <div class="form-actions">
+        @if (User.IsInRole("Admin"))
+        {
+            <a href="@Url.Action("ApproveLoan", new { id = Model.Id })" class="btn btn-success">Approve Loan</a>
+            <a href="@Url.Action("RejectLoan", new { id = Model.Id })" class="btn btn-danger">Reject Loan</a>
+        }
+        else
+        {
+            <p>Loan is under review</p>
+        }
+    </div>
+
+    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Back to Home</a>
+</div>

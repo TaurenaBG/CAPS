@@ -28,6 +28,26 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="PawnShops" asp-action="Index">PawnShops</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" id="navbarDropdownItems" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Items
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownItems">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Items" asp-action="Buy">Buy Item</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Items" asp-action="Sell">Sell Item</a></li>
+                            </ul>
+                        </li>
+
+                       
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" id="navbarDropdownLoans" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Loans
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownLoans">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Loans" asp-action="TakeLoan">Take Loan</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Loans" asp-action="PayLoan">Pay Loan</a></li>
+                            </ul>
+                        </li>
                         
                     </ul>
                     

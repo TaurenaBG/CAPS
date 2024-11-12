@@ -4,11 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using CAPS.DataModels;
 using CAPS.Common;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using CAPS.Data.Data;
 using CAPS.Data;
 using CAPS.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using CAPS.Global;
+using CAPS.Data.Data;
+
 
 namespace CreditAndPawnShop
 {
@@ -42,11 +41,14 @@ namespace CreditAndPawnShop
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
             });
 
+            builder.Services.AddScoped<ILoanService, LoanService>();
             builder.Services.AddScoped<IPawnShopAdminService, PawnShopAdminService>();
             builder.Services.AddScoped<IPawnShopService, PawnShopService>();
             builder.Services.AddTransient<IEmailSender, EmailSender>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
+
+                       
 
             var app = builder.Build();
 
