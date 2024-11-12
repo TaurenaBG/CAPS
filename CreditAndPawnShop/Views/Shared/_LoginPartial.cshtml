@@ -6,14 +6,22 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
+        var user = await UserManager.GetUserAsync(User); 
+        var fullName = user?.FullName ?? user?.Email; 
+        var currencyAmount = user?.CurrencyAmount ?? 0.00m;
+
+        <li class="nav-item d-flex align-items-center">
+           
+            <span class="nav-link text-dark ms-3">Hello, @fullName!</span>
+
+            
+            <span class="nav-link text-dark ms-3">Currency: @currencyAmount</span>
+
+            
+            <form class="form-inline ms-3" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            </form>
+        </li>
 }
 else
 {

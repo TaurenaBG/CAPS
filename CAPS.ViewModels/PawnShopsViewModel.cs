@@ -15,6 +15,7 @@ namespace CAPS.ViewModels
         [MinLength(PawnShopCityMinLenght, ErrorMessage = PawnShopCityMinLenghtErrorMsg)]
         public string City { get; set; } = null !;
 
+        
         public string? LocationUrl { get; set; }
         public List<PawnedItemViewModel> PawnedItems { get; set; } = new List<PawnedItemViewModel>();
     }

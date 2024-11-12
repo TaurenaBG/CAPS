@@ -27,14 +27,20 @@ namespace CreditAndPawnShop.Controllers
 
         public async Task<IActionResult> Index()
         {
-            
+
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user != null)
+            {
+                
+                ViewBag.FullName = user.FullName ?? user.Email; 
+                ViewBag.CurrencyAmount = user.CurrencyAmount;
+            }
+
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+       
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
