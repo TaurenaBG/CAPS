@@ -29,7 +29,7 @@ namespace CAPS.Services
                 LoanTerm = loanTerm,
                 IssuedDate = DateTime.Now,
                 DueDate = DateTime.Now.AddMonths(loanTerm),
-                LoanStatus = LoanStatus.Pending // Assuming LoanStatus is an enum
+                LoanStatus = LoanStatus.Pending 
             };
 
             _context.Loans.Add(loan);

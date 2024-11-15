@@ -86,6 +86,7 @@ namespace CreditAndPawnShop.Controllers
 
             return View("LoanDetails", loanDetailsViewModel); // Reuse LoanDetails view
         }
+
     }
 
 

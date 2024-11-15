@@ -4,6 +4,7 @@
     {
         Pending,
         Aproved,
-        Declined
+        Declined,
+        PaidOff
     }
 }
