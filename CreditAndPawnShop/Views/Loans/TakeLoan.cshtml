@@ -1,27 +1,24 @@
 ﻿@model CAPS.ViewModels.TakeLoanViewModel
 
-@{
-    ViewData["Title"] = "Take Loan";
-}
+<h2>Take a Loan</h2>
 
-<h2 class="page-title">Take a Loan</h2>
-
-<form method="post" asp-action="TakeLoan" class="loan-form">
+<form method="post" asp-action="TakeLoan">
     <div class="form-group">
-        <label for="loanAmount">Loan Amount</label>
-        <input type="number" name="loanAmount" id="loanAmount" class="form-control" required min="1" value="@Model.Amount" />
-        <span asp-validation-for="Amount" class="text-danger"></span>
+        <label for="Amount">Loan Amount</label>
+        <input type="number" asp-for="Amount" class="form-control" />
+        <span asp-validation-for="Amount"></span>
     </div>
 
     <div class="form-group">
-        <label for="loanTerm">Loan Term (Months)</label>
-        <input type="number" name="loanTerm" id="loanTerm" class="form-control" required min="1" value="@Model.LoanTerm" />
-        <span asp-validation-for="LoanTerm" class="text-danger"></span>
+        <label for="LoanTerm">Loan Term (Months)</label>
+        <input type="number" asp-for="LoanTerm" class="form-control" />
+        <span asp-validation-for="LoanTerm"></span>
     </div>
 
-    <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Submit Loan Request</button>
-        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Cancel</a>
-    </div>
+    <button type="submit" class="btn btn-primary">Create Loan</button>
 </form>
-
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

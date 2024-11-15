@@ -24,10 +24,11 @@ namespace CAPS.DataModels
         public DateTime DueDate { get; set; }
 
         public bool IsDeleted { get; set; }
-        public int PawnShopId { get; set; }
 
-        [ForeignKey(nameof(PawnShopId))]
-        public PawnShop PawnShop { get; set; }
+        //public int PawnShopId { get; set; }
+
+        //[ForeignKey(nameof(PawnShopId))]
+        //public PawnShop PawnShop { get; set; }
 
         public string AppUserId { get; set; }
         [ForeignKey(nameof(AppUserId))]

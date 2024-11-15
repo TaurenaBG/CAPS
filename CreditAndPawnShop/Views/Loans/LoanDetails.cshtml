@@ -1,49 +1,34 @@
-﻿@model CAPS.DataModels.Loan
+﻿@model CAPS.ViewModels.LoanDetailsViewModel
 
 @{
-    ViewData["Title"] = $"Loan Details for {Model.AppUser.FullName}";
+    ViewData["Title"] = "Loan Details";
 }
 
-<h2 class="page-title">Loan Details</h2>
+<h2>@ViewData["Title"]</h2>
 
 <div class="loan-details">
     <div class="form-group">
-        <label>Loan Amount:</label>
-        <p>@Model.Amount</p>
+        <label><strong>Loan Amount:</strong></label>
+        <p>@Model.Amount.ToString("C")</p>
     </div>
-
     <div class="form-group">
-        <label>Loan Term (months):</label>
+        <label><strong>Loan Term (Months):</strong></label>
         <p>@Model.LoanTerm</p>
     </div>
-
-
     <div class="form-group">
-        <label>Status:</label>
+        <label><strong>Issued Date:</strong></label>
+        <p>@Model.IssuedDate.ToString("d")</p>
+    </div>
+    <div class="form-group">
+        <label><strong>Due Date:</strong></label>
+        <p>@Model.DueDate.ToString("d")</p>
+    </div>
+    <div class="form-group">
+        <label><strong>Loan Status:</strong></label>
         <p>@Model.LoanStatus</p>
     </div>
+</div>
 
-    <div class="form-group">
-        <label>Loan Date:</label>
-        <p>@Model.IssuedDate.ToShortDateString()</p>
-    </div>
-
-    <div class="form-group">
-        <label>Due Date:</label>
-        <p>@Model.DueDate.ToShortDateString()</p>
-    </div>
-
-    <div class="form-actions">
-        @if (User.IsInRole("Admin"))
-        {
-            <a href="@Url.Action("ApproveLoan", new { id = Model.Id })" class="btn btn-success">Approve Loan</a>
-            <a href="@Url.Action("RejectLoan", new { id = Model.Id })" class="btn btn-danger">Reject Loan</a>
-        }
-        else
-        {
-            <p>Loan is under review</p>
-        }
-    </div>
-
+<div>
     <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Back to Home</a>
 </div>

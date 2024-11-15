@@ -10,7 +10,7 @@ namespace CAPS.Common
     {
         public static async Task SeedPawnedItemsAsync(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
-            // Ensure there are PawnShops and a user to assign the items to
+            
             var pawnShops = await context.PawnShops.ToListAsync();
             var adminUser = await userManager.FindByEmailAsync("admin@admin.com");
 
