@@ -10,6 +10,14 @@ namespace CAPS.Services
         Task<Loan> CreateLoanAsync(string userId, decimal loanAmount, int loanTerm);
         Task<Loan> GetLoanDetailsAsync(int loanId);
         Task<Loan> GetLoanByIdAsync(int loanId);
+        Task<List<Loan>> GetPendingLoansAsync();
+        Task<bool> ApproveLoanAsync(int loanId, string adminUserId);
+        Task<bool> DeclineLoanAsync(int loanId);
+        Task<bool> DeleteLoanAsync(int loanId);
+
+
+
+
 
     }
 }

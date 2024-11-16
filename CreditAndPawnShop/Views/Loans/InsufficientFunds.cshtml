@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Insufficient Funds";
+}
+
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+<h2 class="text-center text-success">Insufficient Funds</h2>
+<div class="alert alert-warning" role="alert">
+    The loan could not be approved because the admin user does not have enough funds.
+</div>
+
+<a href="@Url.Action("ManageLoans", "Loans")" class="btn btn-primary btn-lg">
+    Back to Loan Management
+</a>

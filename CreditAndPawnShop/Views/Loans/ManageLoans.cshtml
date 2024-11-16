@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CAPS.DataModels.Loan>
+
+@{
+    ViewData["Title"] = "Manage Loans";
+}
+
+<h2>Manage Loans</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+           
+            <th>Customer</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var loan in Model)
+        {
+            <tr>
+                <td>@loan.AppUser.Email</td>
+                <td>@loan.Amount</td>
+                <td>@loan.LoanStatus.ToString()</td> 
+                <td>
+                    <form asp-action="ApproveLoan" method="post" style="display:inline">
+                        <input type="hidden" name="id" value="@loan.Id" />
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    </form>
+                    <form asp-action="DeclineLoan" method="post" style="display:inline">
+                        <input type="hidden" name="id" value="@loan.Id" />
+                        <button type="submit" class="btn btn-warning">Decline</button>
+                    </form>
+                    <form asp-action="DeleteLoan" method="post" style="display:inline">
+                        <input type="hidden" name="id" value="@loan.Id" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

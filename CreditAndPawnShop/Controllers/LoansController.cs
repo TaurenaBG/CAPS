@@ -21,13 +21,13 @@ namespace CreditAndPawnShop.Controllers
             _userManager = userManager;
         }
 
-        // GET: Loan/Create
+       
         public IActionResult TakeLoan()
         {
             return View(new TakeLoanViewModel());
         }
 
-        // POST: Loan/Create
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> TakeLoan(TakeLoanViewModel model)
@@ -38,10 +38,10 @@ namespace CreditAndPawnShop.Controllers
                 var loan = await _loanService.CreateLoanAsync(user.Id, model.Amount, model.LoanTerm);
                 return RedirectToAction("LoanDetails", new { id = loan.Id });
             }
-            return View(model); // If there are validation errors, return the same view
+            return View(model); 
         }
 
-        // GET: Loan/LoanDetails/5
+        
         public async Task<IActionResult> LoanDetails(int id)
         {
             var loan = await _loanService.GetLoanDetailsAsync(id);
@@ -64,7 +64,7 @@ namespace CreditAndPawnShop.Controllers
             return View(loanDetailsViewModel);
         }
 
-        // GET: Loan/GetLoanById/5
+       
         public async Task<IActionResult> GetLoanById(int id)
         {
             var loan = await _loanService.GetLoanByIdAsync(id);
@@ -85,6 +85,54 @@ namespace CreditAndPawnShop.Controllers
             };
 
             return View("LoanDetails", loanDetailsViewModel); // Reuse LoanDetails view
+        }
+        public async Task<IActionResult> ManageLoans()
+        {
+            var pendingLoans = await _loanService.GetPendingLoansAsync();
+            return View(pendingLoans);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ApproveLoan(int id)
+        {
+            
+
+            string adminUserId = _userManager.GetUserId(User);
+
+            var  succes = await _loanService.ApproveLoanAsync(id, adminUserId);
+
+            if (!succes)
+            {
+                
+                 return View("InsufficientFunds");
+            }
+
+            
+            return RedirectToAction(nameof(ManageLoans));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeclineLoan(int id)
+        {
+            bool success = await _loanService.DeclineLoanAsync(id);
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(ManageLoans));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteLoan(int id)
+        {
+            bool success = await _loanService.DeleteLoanAsync(id);
+            if (!success)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(ManageLoans));
         }
 
     }
