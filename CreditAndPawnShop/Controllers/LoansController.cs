@@ -159,8 +159,9 @@ namespace CreditAndPawnShop.Controllers
         public async Task<IActionResult> PayLoanForm(int loanId)
         {
             var loan = await _loanService.GetLoanByIdAsync(loanId);
+            var currentUser = await _userManager.GetUserAsync(User);
 
-           
+
 
             var totalAmountDue = loan.Amount + (loan.Amount * 0.20m); // 20% tax added
 
@@ -168,38 +169,44 @@ namespace CreditAndPawnShop.Controllers
             {
                 LoanId = loanId,
                 Amount = totalAmountDue,
-               
+                AppUserId = currentUser.Id,
+                
             };
 
             return View(viewModel);
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> PayLoanForm(PayViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(model); 
+            //}
 
             var currentUser = await _userManager.GetUserAsync(User);
-      
-            var success = await _loanService.PayLoan(model.LoanId, model.Amount, currentUser.Id);
+            var success = await _loanService.PayLoanAsync(model, model.Amount, model.AppUserId);
 
             if (success)
             {
-                // Redirect to a confirmation page or loan list
+                // If payment succeeds, redirect to confirmation page
                 return RedirectToAction("PayLoanConfirmation", new { loanId = model.LoanId });
             }
 
-            return View(model);
+            return View(model);  
         }
 
-        
-        public IActionResult PayLoanConfirmation(int loanId)
+
+        public async Task<IActionResult> PayLoanConfirmation(int loanId)
         {
             
-            var loan = _loanService.GetLoanDetailsAsync(loanId).Result;
+            var loan = await _loanService.GetLoanByIdAsync(loanId);
+            if (loan == null)
+            {
+                return NotFound(); 
+            }
+
+            
             return View(loan);
         }
     }

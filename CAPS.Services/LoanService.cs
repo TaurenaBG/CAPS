@@ -4,6 +4,7 @@ using CAPS.DataModels;
 using CAPS.Global;
 using CAPS.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -170,67 +171,89 @@ namespace CAPS.Services
                 .Where(l => l.AppUserId == userId && l.LoanStatus == LoanStatus.Declined && !l.IsDeleted)
                 .ToListAsync();
         }
-        public async Task<bool> PayLoan(int loanId, decimal paymentAmount, string userId)
+
+        
+        public async Task<bool> PayLoanAsync(PayViewModel model, decimal paymentAmount, string userId)
         {
-            var loan = await _context.Loans.FirstOrDefaultAsync(l => l.Id == loanId && !l.IsDeleted);
-            var totalAmountDue = loan.Amount + (loan.Amount * 0.20m); // 20% tax added
-
-            var currentUser = await _userManager.FindByIdAsync(userId);
-
-            if (currentUser.CurrencyAmount < paymentAmount)
+           
+            var loan = await _context.Loans.FirstOrDefaultAsync(l => l.Id == model.LoanId && !l.IsDeleted);
+            if (loan == null)
             {
                 return false;
             }
 
+            
+            var totalAmountDue = loan.Amount + (loan.Amount * 0.20m);
+
+
+            var currentUser =  await _userManager.FindByIdAsync(userId);
+            if (currentUser.CurrencyAmount < paymentAmount)
+            {
+                return false; // Insufficient funds
+            }
+
+           
             var payment = new Payment
             {
-                LoanId = loanId,
+                LoanId = loan.Id,
                 Amount = paymentAmount,
                 PaymentDate = DateTime.Now,
                 AppUserId = userId
             };
 
-            _context.Payments.Add(payment);
+            await _context.Payments.AddAsync(payment);
 
+            
             if (paymentAmount >= totalAmountDue)
             {
+                
                 var excessAmount = paymentAmount - totalAmountDue;
-
-                currentUser.CurrencyAmount -= totalAmountDue;
-                currentUser.CurrencyAmount += excessAmount;
+                currentUser.CurrencyAmount -= totalAmountDue; // Deduct from user's balance
+                currentUser.CurrencyAmount += excessAmount; // Add excess back to the user
 
                 var owner = await _pawnShopAdminService.GetAdminUserAsync();
                 if (owner != null)
                 {
                     owner.CurrencyAmount += totalAmountDue;
+
+                    
+                    _context.Users.Update(currentUser);
+                    _context.Users.Update(owner);
                 }
 
-                loan.LoanStatus = LoanStatus.PaidOff;
-
-                _context.SaveChanges();
+                loan.LoanStatus = LoanStatus.PaidOff; // Mark loan as paid off
             }
             else
             {
-                var amountForLoan = paymentAmount * 0.80m; // 80% goes to the loan
-                var amountForAdmin = paymentAmount * 0.20m; // 20% goes to admin's currency
+                // If partial payment, split the amount
+                var amountForLoan = paymentAmount * 0.80m; // 80% goes to loan
+                var amountForAdmin = paymentAmount * 0.20m; // 20% goes to admin's balance
 
-                loan.Amount -= amountForLoan;
+                loan.Amount -= amountForLoan; // Deduct from loan amount
 
-                var admin = await _pawnShopAdminService.GetAdminUserAsync();
-                if (admin != null)
+                var owner = await _pawnShopAdminService.GetAdminUserAsync();
+                if (owner != null)
                 {
-                    admin.CurrencyAmount += amountForAdmin;
-                    _context.Users.Update(admin);
+                    owner.CurrencyAmount += amountForAdmin;
+                    currentUser.CurrencyAmount -= paymentAmount;
+
+
+                    _context.Users.Update(currentUser);
+                    _context.Users.Update(owner);
                 }
             }
 
+           
             await _context.SaveChangesAsync();
-            return true;
+
+            return true; 
         }
 
-
-
-
-
     }
+
+
+
+
+
 }
+

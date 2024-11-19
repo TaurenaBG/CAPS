@@ -11,9 +11,12 @@
 @if (Model.LoanStatus == LoanStatus.PaidOff)
 {
     <p>Your loan has been fully paid off.</p>
+    <a href="@Url.Action("PayLoan", "Loans")" class="btn btn-secondary">Back</a>
 }
 else
 {
     <p>Your loan is still pending. Please make another payment if necessary.</p>
+    <a href="@Url.Action("PayLoanForm", "Loans", new { loanId = Model.Id })" class="btn btn-secondary">Back</a>
 }
+
 

@@ -20,7 +20,7 @@
         <tbody>
             @foreach (var loan in Model.ApprovedLoans)
             {
-                var taxAmount = loan.Amount * 0.2M;
+                var taxAmount = loan.Amount * 0.20m;
                 var totalAmountDue = loan.Amount + taxAmount;
                 <tr>
                     <td>@loan.Amount.ToString("F2")</td>
