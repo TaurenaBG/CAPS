@@ -1,6 +1,7 @@
 ﻿using CAPS.Data.Data;
 using CAPS.DataModels;
 using CAPS.Global;
+using CAPS.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,23 +39,51 @@ namespace CAPS.Services
             return loan;
         }
 
-       
-        public async Task<Loan> GetLoanDetailsAsync(int loanId)
+
+        public async Task<LoanDetailsViewModel> GetLoanDetailsAsync(int loanId)
         {
             var loan = await _context.Loans
                 .Include(l => l.AppUser)  
                 .FirstOrDefaultAsync(l => l.Id == loanId);
 
-            return loan;
+            
+
+            
+            var loanDetailsViewModel = new LoanDetailsViewModel
+            {
+                LoanId = loan.Id,
+                Amount = loan.Amount,
+                LoanTerm = loan.LoanTerm,
+                IssuedDate = loan.IssuedDate,
+                DueDate = loan.DueDate,
+                LoanStatus = loan.LoanStatus
+            };
+
+            return loanDetailsViewModel;
         }
 
-        
-        public async Task<Loan> GetLoanByIdAsync(int loanId)
+
+        public async Task<LoanDetailsViewModel> GetLoanByIdAsync(int loanId)
         {
-            return await _context.Loans
-                .Where(l => l.Id == loanId && !l.IsDeleted) 
+            var loan = await _context.Loans
+                .Where(l => l.Id == loanId && !l.IsDeleted)
                 .FirstOrDefaultAsync();
+
+
+            
+            var loanDetailsViewModel = new LoanDetailsViewModel
+            {
+                LoanId = loan.Id,
+                Amount = loan.Amount,
+                LoanTerm = loan.LoanTerm,
+                IssuedDate = loan.IssuedDate,
+                DueDate = loan.DueDate,
+                LoanStatus = loan.LoanStatus
+            };
+
+            return loanDetailsViewModel;
         }
+
         public async Task<List<Loan>> GetPendingLoansAsync()
         {
             return await _context.Loans
@@ -120,5 +149,8 @@ namespace CAPS.Services
             await _context.SaveChangesAsync();
             return true;
         }
+        
+
+
     }
 }

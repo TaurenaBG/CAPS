@@ -41,50 +41,23 @@ namespace CreditAndPawnShop.Controllers
             return View(model); 
         }
 
-        
+
         public async Task<IActionResult> LoanDetails(int id)
         {
-            var loan = await _loanService.GetLoanDetailsAsync(id);
+            var loanDetailsViewModel = await _loanService.GetLoanDetailsAsync(id);
 
-            if (loan == null)
-            {
-                return NotFound();
-            }
-
-            var loanDetailsViewModel = new LoanDetailsViewModel
-            {
-                LoanId = loan.Id,
-                Amount = loan.Amount,
-                LoanTerm = loan.LoanTerm,
-                IssuedDate = loan.IssuedDate,
-                DueDate = loan.DueDate,
-                LoanStatus = loan.LoanStatus
-            };
+            
 
             return View(loanDetailsViewModel);
         }
 
-       
         public async Task<IActionResult> GetLoanById(int id)
         {
-            var loan = await _loanService.GetLoanByIdAsync(id);
+            var loanDetailsViewModel = await _loanService.GetLoanByIdAsync(id);
 
-            if (loan == null)
-            {
-                return NotFound();
-            }
+            
 
-            var loanDetailsViewModel = new LoanDetailsViewModel
-            {
-                LoanId = loan.Id,
-                Amount = loan.Amount,
-                LoanTerm = loan.LoanTerm,
-                IssuedDate = loan.IssuedDate,
-                DueDate = loan.DueDate,
-                LoanStatus = loan.LoanStatus
-            };
-
-            return View("LoanDetails", loanDetailsViewModel); // Reuse LoanDetails view
+            return View("LoanDetails", loanDetailsViewModel); 
         }
         public async Task<IActionResult> ManageLoans()
         {
@@ -134,6 +107,7 @@ namespace CreditAndPawnShop.Controllers
 
             return RedirectToAction(nameof(ManageLoans));
         }
+       
 
     }
 

@@ -1,6 +1,4 @@
-﻿using CAPS.Global;
-using System.ComponentModel.DataAnnotations;
-using static CAPS.Global.GlobalConstants;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CAPS.ViewModels
 {
