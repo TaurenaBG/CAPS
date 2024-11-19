@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using System.Security.Cryptography;
 
 namespace CreditAndPawnShop.Controllers
@@ -92,8 +93,10 @@ namespace CreditAndPawnShop.Controllers
             {
                 return NotFound();
             }
+                   
+             return RedirectToAction("ManageLoans");
 
-            return RedirectToAction(nameof(ManageLoans));
+            
         }
 
         [HttpPost]
@@ -105,9 +108,52 @@ namespace CreditAndPawnShop.Controllers
                 return NotFound();
             }
 
-            return RedirectToAction(nameof(ManageLoans));
+            if (User.IsInRole("Admin"))
+            {
+               
+                return RedirectToAction("ManageLoans");
+            }
+            else
+            {
+                
+                return RedirectToAction("PayLoan");
+            }
         }
-       
+        public async Task<IActionResult> PayLoan()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var userId = currentUser.Id;
+
+
+
+            var approvedLoans = await _loanService.FindAllApprovedLoansAsync(userId);
+            var declinedLoans = await _loanService.FindAllDeclinedLoansAsync(userId);
+
+            
+            var viewModel = new LoanListViewModel
+            {
+                ApprovedLoans = approvedLoans,
+                DeclinedLoans = declinedLoans
+            };
+
+            return View(viewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteDeclinedLoan(int id)
+        {
+            
+            var currentUser = await _userManager.GetUserAsync(User);
+            var userId = currentUser?.Id;
+
+            
+            var success = await _loanService.DeleteLoanAsync(id);
+
+           
+
+            
+            return RedirectToAction("PayLoan");
+        }
+
 
     }
 

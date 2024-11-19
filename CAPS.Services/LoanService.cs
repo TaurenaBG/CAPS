@@ -149,7 +149,20 @@ namespace CAPS.Services
             await _context.SaveChangesAsync();
             return true;
         }
-        
+        public async Task<List<Loan>> FindAllApprovedLoansAsync(string userId)
+        {
+            return await _context.Loans
+                .Where(l => l.AppUserId == userId && l.LoanStatus == LoanStatus.Aproved && !l.IsDeleted)
+                .ToListAsync();
+        }
+
+        public async Task<List<Loan>> FindAllDeclinedLoansAsync(string userId)
+        {
+            return await _context.Loans
+                .Where(l => l.AppUserId == userId && l.LoanStatus == LoanStatus.Declined && !l.IsDeleted)
+                .ToListAsync();
+        }
+
 
 
     }

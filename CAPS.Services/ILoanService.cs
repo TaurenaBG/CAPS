@@ -14,7 +14,8 @@ namespace CAPS.Services
         Task<bool> ApproveLoanAsync(int loanId, string adminUserId);
         Task<bool> DeclineLoanAsync(int loanId);
         Task<bool> DeleteLoanAsync(int loanId);
-        
+        Task<List<Loan>> FindAllApprovedLoansAsync(string userId);
+        Task<List<Loan>> FindAllDeclinedLoansAsync(string userId);
 
 
 

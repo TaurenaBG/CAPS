@@ -1,5 +1,79 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@using CAPS.ViewModels;
+@model LoanListViewModel
+
+<h2>Loan List</h2>
+
+<h3>Approved Loans</h3>
+@if (Model.ApprovedLoans != null && Model.ApprovedLoans.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Loan Amount</th>
+                <th>Tax (20%)</th>
+                <th>Loan Term</th>
+                <th>Issued Date</th>
+                <th>Due Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var loan in Model.ApprovedLoans)
+            {
+                var taxAmount = loan.Amount * 0.2M;
+                <tr>
+                    <td>@loan.Amount</td>
+                    <td>@taxAmount.ToString("C")</td>
+                    <td>@loan.LoanTerm</td>
+                    <td>@loan.IssuedDate.ToShortDateString()</td>
+                    <td>@loan.DueDate.ToShortDateString()</td>
+                    <td>
+                        <form method="post" asp-action="PayLoan" asp-route-id="@loan.Id">
+                            <button type="submit" class="btn btn-success">Pay</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No approved loans found.</p>
+}
+
+<h3>Declined Loans</h3>
+@if (Model.DeclinedLoans != null && Model.DeclinedLoans.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Loan Amount</th>
+                <th>Loan Term</th>
+                <th>Issued Date</th>
+                <th>Due Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var loan in Model.DeclinedLoans)
+            {
+                <tr>
+                    <td>@loan.Amount</td>
+                    <td>@loan.LoanTerm</td>
+                    <td>@loan.IssuedDate.ToShortDateString()</td>
+                    <td>@loan.DueDate.ToShortDateString()</td>
+                    <td>
+                        <form method="post" asp-action="DeleteLoan" asp-route-id="@loan.Id">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No declined loans found.</p>
 }
