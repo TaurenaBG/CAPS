@@ -2,6 +2,7 @@
 using CAPS.DataModels;
 using CAPS.Services;
 using CAPS.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -10,10 +11,14 @@ namespace CAPS.Data
     public class PawnShopAdminService : IPawnShopAdminService
     {
         private readonly ApplicationDbContext _context;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public PawnShopAdminService(ApplicationDbContext context)
+        public PawnShopAdminService(ApplicationDbContext context, RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager)
         {
             _context = context;
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
 
         public async Task CreatePawnShopAsync(PawnShopsViewModel model)
@@ -70,6 +75,22 @@ namespace CAPS.Data
                 .FirstOrDefaultAsync();
 
             return pawnShop;
+        }
+        public async Task<AppUser> GetAdminUserAsync()
+        {
+            
+            var adminRole = await _roleManager.FindByNameAsync("Admin");
+
+            if (adminRole != null)
+            {
+                
+                var usersInRole = await _userManager.GetUsersInRoleAsync(adminRole.Name);
+
+               
+                return usersInRole.Where(r => r.FullName == "Owner").FirstOrDefault();
+            }
+
+            return null; 
         }
     }
 }

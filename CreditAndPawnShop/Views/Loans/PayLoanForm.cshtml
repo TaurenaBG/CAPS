@@ -1,0 +1,27 @@
+﻿@model CAPS.ViewModels.PayViewModel
+
+<h2>Pay Loan</h2>
+
+<form method="post">
+    <!-- Display Total Amount Due (Read-Only) -->
+    <div class="form-group">
+        <label for="AmountDue">Amount To You Need To Pay</label>
+        <input type="text" class="form-control" id="AmountDue" name="AmountDue" value="@Model.Amount.ToString("C")" readonly />
+    </div>
+
+    <!-- Input for Payment Amount -->
+    <div class="form-group">
+        <label for="AmountToPay">Enter Payment Amount</label>
+        <input type="number" class="form-control" id="AmountToPay" name="AmountToPay" step="0.01" required />
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Pay</button>
+    <a href="@Url.Action("PayLoan", "Loans")" class="btn btn-secondary">Back</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

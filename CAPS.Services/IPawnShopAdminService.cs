@@ -1,4 +1,5 @@
-﻿using CAPS.ViewModels;
+﻿using CAPS.DataModels;
+using CAPS.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace CAPS.Services
         Task UpdatePawnShopAsync(PawnShopsViewModel model);
         Task DeletePawnShopAsync(int id);
         Task<PawnShopsViewModel> GetPawnShopByIdAsync(int id);
+        Task<AppUser> GetAdminUserAsync();
     }
 }

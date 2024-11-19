@@ -1,0 +1,19 @@
+﻿@model CAPS.DataModels.Loan;
+@using CAPS.Global;
+
+<h2>Payment Successful</h2>
+
+<p>Your payment has been successfully processed.</p>
+<p>Loan ID: @Model.Id</p>
+<p>Loan Status: @Model.LoanStatus</p>
+<p>Remaining Balance: @Model.Amount</p>
+
+@if (Model.LoanStatus == LoanStatus.PaidOff)
+{
+    <p>Your loan has been fully paid off.</p>
+}
+else
+{
+    <p>Your loan is still pending. Please make another payment if necessary.</p>
+}
+

@@ -21,16 +21,15 @@
             @foreach (var loan in Model.ApprovedLoans)
             {
                 var taxAmount = loan.Amount * 0.2M;
+                var totalAmountDue = loan.Amount + taxAmount;
                 <tr>
-                    <td>@loan.Amount</td>
-                    <td>@taxAmount.ToString("C")</td>
+                    <td>@loan.Amount.ToString("F2")</td>
+                    <td>@taxAmount.ToString("F2")</td>
                     <td>@loan.LoanTerm</td>
                     <td>@loan.IssuedDate.ToShortDateString()</td>
                     <td>@loan.DueDate.ToShortDateString()</td>
                     <td>
-                        <form method="post" asp-action="PayLoan" asp-route-id="@loan.Id">
-                            <button type="submit" class="btn btn-success">Pay</button>
-                        </form>
+                        <a href="@Url.Action("PayLoanForm", "Loans", new { loanId = loan.Id })" class="btn btn-success">Pay</a>
                     </td>
                 </tr>
             }

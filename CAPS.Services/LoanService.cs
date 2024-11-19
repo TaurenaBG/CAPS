@@ -1,4 +1,5 @@
-﻿using CAPS.Data.Data;
+﻿using CAPS.Data;
+using CAPS.Data.Data;
 using CAPS.DataModels;
 using CAPS.Global;
 using CAPS.ViewModels;
@@ -13,11 +14,18 @@ namespace CAPS.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IPawnShopAdminService _pawnShopAdminService;
 
-        public LoanService(ApplicationDbContext context, UserManager<AppUser> userManager)
+        public LoanService(ApplicationDbContext context,
+            UserManager<AppUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            IPawnShopAdminService pawnShopAdminService)
         {
             _context = context;
             _userManager = userManager;
+            _roleManager = roleManager;
+            _pawnShopAdminService = pawnShopAdminService;
         }
 
         
@@ -63,7 +71,7 @@ namespace CAPS.Services
         }
 
 
-        public async Task<LoanDetailsViewModel> GetLoanByIdAsync(int loanId)
+        public async Task<Loan> GetLoanByIdAsync(int loanId)
         {
             var loan = await _context.Loans
                 .Where(l => l.Id == loanId && !l.IsDeleted)
@@ -71,17 +79,17 @@ namespace CAPS.Services
 
 
             
-            var loanDetailsViewModel = new LoanDetailsViewModel
-            {
-                LoanId = loan.Id,
-                Amount = loan.Amount,
-                LoanTerm = loan.LoanTerm,
-                IssuedDate = loan.IssuedDate,
-                DueDate = loan.DueDate,
-                LoanStatus = loan.LoanStatus
-            };
+            //var loanDetailsViewModel = new LoanDetailsViewModel
+            //{
+            //    LoanId = loan.Id,
+            //    Amount = loan.Amount,
+            //    LoanTerm = loan.LoanTerm,
+            //    IssuedDate = loan.IssuedDate,
+            //    DueDate = loan.DueDate,
+            //    LoanStatus = loan.LoanStatus
+            //};
 
-            return loanDetailsViewModel;
+            return loan;
         }
 
         public async Task<List<Loan>> GetPendingLoansAsync()
@@ -162,6 +170,65 @@ namespace CAPS.Services
                 .Where(l => l.AppUserId == userId && l.LoanStatus == LoanStatus.Declined && !l.IsDeleted)
                 .ToListAsync();
         }
+        public async Task<bool> PayLoan(int loanId, decimal paymentAmount, string userId)
+        {
+            var loan = await _context.Loans.FirstOrDefaultAsync(l => l.Id == loanId && !l.IsDeleted);
+            var totalAmountDue = loan.Amount + (loan.Amount * 0.20m); // 20% tax added
+
+            var currentUser = await _userManager.FindByIdAsync(userId);
+
+            if (currentUser.CurrencyAmount < paymentAmount)
+            {
+                return false;
+            }
+
+            var payment = new Payment
+            {
+                LoanId = loanId,
+                Amount = paymentAmount,
+                PaymentDate = DateTime.Now,
+                AppUserId = userId
+            };
+
+            _context.Payments.Add(payment);
+
+            if (paymentAmount >= totalAmountDue)
+            {
+                var excessAmount = paymentAmount - totalAmountDue;
+
+                currentUser.CurrencyAmount -= totalAmountDue;
+                currentUser.CurrencyAmount += excessAmount;
+
+                var owner = await _pawnShopAdminService.GetAdminUserAsync();
+                if (owner != null)
+                {
+                    owner.CurrencyAmount += totalAmountDue;
+                }
+
+                loan.LoanStatus = LoanStatus.PaidOff;
+
+                _context.SaveChanges();
+            }
+            else
+            {
+                var amountForLoan = paymentAmount * 0.80m; // 80% goes to the loan
+                var amountForAdmin = paymentAmount * 0.20m; // 20% goes to admin's currency
+
+                loan.Amount -= amountForLoan;
+
+                var admin = await _pawnShopAdminService.GetAdminUserAsync();
+                if (admin != null)
+                {
+                    admin.CurrencyAmount += amountForAdmin;
+                    _context.Users.Update(admin);
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+
 
 
 
