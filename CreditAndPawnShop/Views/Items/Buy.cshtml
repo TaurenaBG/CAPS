@@ -1,0 +1,41 @@
+﻿@using CAPS.ViewModels;
+@model List<PawnItemViewModel>  
+
+<h2>Items Available for Purchase</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+               
+                <th>Value</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                   
+                    <td>@item.ValueWithTax</td>
+                    <td>@item.Status</td>
+                    <td>
+                        <form method="post" action="@Url.Action("BuyItem", "Items", new { id = item.Id })">
+                            <button type="submit" class="btn btn-primary">Buy</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No items available for purchase.</p>
+}

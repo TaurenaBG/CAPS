@@ -1,0 +1,37 @@
+﻿@using CAPS.DataModels;
+@model List<PawnItem>
+
+@{
+    ViewData["Title"] = "Brought Items";
+}
+
+<h2>Brought Items</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Value</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Value</td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>You have not bought any items yet.</p>
+}

@@ -34,8 +34,8 @@ namespace CAPS.Services
                 Description = model.Description,
                 Value = model.Value,
                 Category = model.Category,
-                PawnDate = model.PawnDate,
-                DueDate = model.DueDate,
+                PawnDate = DateTime.Now,
+                DueDate = DateTime.Now.AddMonths(1),
                 AppUserId = userId,
                 PawnShopId = model.PawnShopId, 
                 Status = PawnStatus.Pending 
@@ -168,5 +168,65 @@ namespace CAPS.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<List<PawnItemViewModel>> GetItemsByDueDateWithTaxAsync(DateTime currentDate)
+        {
+            var items = await _context.PawnItems
+                .Where(item => item.DueDate < currentDate && !item.IsDeleted && item.Status == PawnStatus.Pawned)
+                .ToListAsync();
+
+            
+            var updatedItems = items.Select(item => new PawnItemViewModel
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Description = item.Description,
+                OriginalValue = item.Value,
+                ValueWithTax = item.Value * 1.2m,  // Add 20%
+                Status = item.Status
+            }).ToList();
+
+            return updatedItems;
+        }
+        public async Task<bool> BuyItemAsync(int itemId, AppUser currentUser)
+        {
+            
+            var item = await _context.PawnItems
+                .Where(i => i.Id == itemId && !i.IsDeleted && i.Status == PawnStatus.Pawned)
+                .FirstOrDefaultAsync();
+
+           
+            
+            if (currentUser.CurrencyAmount < item.Value * 1.2m) 
+            {
+                return false; // Not enough funds to buy the item
+            }
+
+            
+            currentUser.CurrencyAmount -= item.Value * 1.2m;
+
+            var owner = await _pawnShopAdminService.GetAdminUserAsync();
+            owner.CurrencyAmount += item.Value * 1.2m;
+
+           
+            item.Status = PawnStatus.Sold;
+            item.IsDeleted = true;
+
+            currentUser.BroughtItems.Add(item);
+
+            _context.PawnItems.Update(item);
+            _context.Users.Update(currentUser);
+            _context.Users.Update(owner);
+
+            
+             await _context.SaveChangesAsync();
+
+            return true;
+        }
+        public async Task<List<PawnItem>> GetBoughtItemsAsync(string userId)
+        {
+            return await _context.PawnItems
+                .Where(item => item.AppUserId == userId && item.Status == PawnStatus.Sold)
+                .ToListAsync();
+        }
     }
 }

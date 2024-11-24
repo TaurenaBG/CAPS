@@ -118,5 +118,42 @@ namespace CreditAndPawnShop.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> Buy()
+        {
+            var currentDate = DateTime.Now;
+            
+            var updatedItems = await _itemService.GetItemsByDueDateWithTaxAsync(currentDate);
+
+            return View(updatedItems);
+        }
+
+
+        public async Task<IActionResult> BuyItem(int id)
+        {
+            var currentUser = await _userManager.GetUserAsync(User); 
+            var success = await _itemService.BuyItemAsync(id, currentUser);
+
+            if (success)
+            {
+                
+                return RedirectToAction("Index", "Home"); 
+            }
+            else
+            {
+
+                return RedirectToAction("InsufficientFunds", "Items");
+            }
+        }
+        public async Task<IActionResult> BroughtItems()
+        {
+            
+            var currentUser = await _userManager.GetUserAsync(User);
+
+           
+            var boughtItems = await _itemService.GetBoughtItemsAsync(currentUser.Id);
+
+            return View(boughtItems); 
+        }
     }
 }

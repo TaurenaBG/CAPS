@@ -22,6 +22,12 @@ namespace CAPS.Services
         Task<bool> RedeemItemAsync(AppUser user, PawnItem item);
         Task DeleteItemAsync(PawnItem item);
 
+        Task<List<PawnItemViewModel>> GetItemsByDueDateWithTaxAsync(DateTime currentDate);
+
+        Task<bool> BuyItemAsync(int itemId, AppUser currentUser);
+
+        Task<List<PawnItem>> GetBoughtItemsAsync(string userId);
+
 
     }
 }
