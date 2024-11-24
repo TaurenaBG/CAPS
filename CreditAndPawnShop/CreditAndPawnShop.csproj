@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Items\Create.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  
 	  
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.7" />
@@ -25,8 +29,21 @@
   <ItemGroup>
     <ProjectReference Include="..\CAPS.Common\CAPS.Common.csproj" />
     <ProjectReference Include="..\CAPS.Data\CAPS.Data.csproj" />
+    <ProjectReference Include="..\CAPS.Global\CAPS.Global.csproj" />
     <ProjectReference Include="..\CAPS.Services\CAPS.Services.csproj" />
     <ProjectReference Include="..\CAPS.ViewModels\CAPS.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Items\Create.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Items\Create.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Items\Create.cshtml" />
   </ItemGroup>
 
 </Project>

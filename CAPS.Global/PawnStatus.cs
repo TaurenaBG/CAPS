@@ -4,6 +4,7 @@
     {
         Pawned,
         Redeemed,
-        Sold
+        Sold,
+        Pending
     }
 }

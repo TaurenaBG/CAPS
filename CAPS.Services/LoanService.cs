@@ -80,15 +80,7 @@ namespace CAPS.Services
 
 
             
-            //var loanDetailsViewModel = new LoanDetailsViewModel
-            //{
-            //    LoanId = loan.Id,
-            //    Amount = loan.Amount,
-            //    LoanTerm = loan.LoanTerm,
-            //    IssuedDate = loan.IssuedDate,
-            //    DueDate = loan.DueDate,
-            //    LoanStatus = loan.LoanStatus
-            //};
+           
 
             return loan;
         }

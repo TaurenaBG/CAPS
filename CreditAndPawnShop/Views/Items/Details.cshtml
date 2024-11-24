@@ -1,0 +1,27 @@
+﻿@model CAPS.DataModels.PawnItem
+
+@{
+    ViewData["Title"] = "Pawn Item Details";
+}
+
+<h2>Pawn Item Details</h2>
+
+<div>
+    <h3>@Model.Name</h3>
+    <p><strong>Description:</strong> @Model.Description</p>
+    <p><strong>Value:</strong> @Model.Value</p>
+    <p><strong>Category:</strong> @Model.Category</p>
+    <p><strong>Pawn Date:</strong> @Model.PawnDate.ToString("MM/dd/yyyy")</p>
+    <p><strong>Due Date:</strong> @Model.DueDate.ToString("MM/dd/yyyy")</p>
+    <p><strong>Status:</strong> @Model.Status</p>
+</div>
+
+<div>
+    <a class="btn btn-secondary" href="@Url.Action("Index","Home")">Back</a>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

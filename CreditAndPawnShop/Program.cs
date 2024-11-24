@@ -41,6 +41,7 @@ namespace CreditAndPawnShop
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
             });
 
+            builder.Services.AddScoped<IItemService, ItemService>();
             builder.Services.AddScoped<ILoanService, LoanService>();
             builder.Services.AddScoped<IPawnShopAdminService, PawnShopAdminService>();
             builder.Services.AddScoped<IPawnShopService, PawnShopService>();
