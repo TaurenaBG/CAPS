@@ -15,13 +15,17 @@ namespace CreditAndPawnShop.Controllers
         private readonly IPawnShopAdminService _pawnShopAdminService;
         private readonly IPawnShopService _pawnShopService;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IItemService _itemService;
 
-        public AdminController(IPawnShopAdminService pawnShopAdminService, IPawnShopService pawnShopService,
+        public AdminController(IPawnShopAdminService pawnShopAdminService,
+            IPawnShopService pawnShopService,
+            IItemService itemService,
             UserManager<AppUser> userManager)
         {
             _pawnShopAdminService = pawnShopAdminService;
             _pawnShopService = pawnShopService;
             _userManager = userManager;
+            _itemService = itemService;
         }
 
         public async Task<IActionResult> Index()
@@ -105,7 +109,56 @@ namespace CreditAndPawnShop.Controllers
             return RedirectToAction("Index", "PawnShops");
         }
 
+        public async Task<IActionResult> ApproveItem(int itemId)
+        {
+            
+            var adminUser = await _userManager.GetUserAsync(User);
+
+            if (adminUser == null)
+            {
+                return Unauthorized(); // If the admin user is not found
+            }
+
+           
+            bool success = await _itemService.ApproveItemAsync(itemId, adminUser);
+
+            if (!success)
+            {
+                
+                return RedirectToAction("InsufficientFunds");
+            }
+
+            
+            return RedirectToAction("ManageItems");
+        }
+
+        public IActionResult InsufficientFunds()
+        {
+            return View();
+        }
+
+
+        public async Task<IActionResult> DeclineItem(int itemId)
+        {
+           
+                
+                await _itemService.UpdateItemStatusAsync(itemId, PawnStatus.Declined);
+
+                
+                return RedirectToAction(nameof(ManageItems));
+            
+            
+        }
+
         
+        public async Task<IActionResult> ManageItems()
+        {
+            
+            var pendingItems = await _itemService.GetPendingItemsAsync();
+
+           
+            return View(pendingItems);
+        }
     }
 
 }

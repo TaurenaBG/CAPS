@@ -1,0 +1,39 @@
+﻿@using CAPS.DataModels;
+@using CAPS.Global;
+@model IEnumerable<PawnItem>
+
+@{
+    ViewData["Title"] = "Manage Pending Items";
+}
+
+<h2>Manage Pending Items</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Value</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.Value</td>
+                <td>@item.Status</td>
+                <td>
+                    @if (item.Status == PawnStatus.Pending)
+                    {
+                        <a href="@Url.Action("ApproveItem", "Admin", new { itemId = item.Id })" class="btn btn-success">Approve</a>
+                        <a href="@Url.Action("DeclineItem", "Admin", new { itemId = item.Id })" class="btn btn-danger">Decline</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

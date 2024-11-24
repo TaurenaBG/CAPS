@@ -1,0 +1,56 @@
+﻿@using CAPS.DataModels;
+@using CAPS.Global;
+@model List<PawnItem>
+
+@{
+    ViewData["Title"] = "My Items";
+}
+
+<h2>My Pawned and Declined Items</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Value</th>
+                <th>Redeem Value</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Value</td>
+
+                    
+                    <td>@(item.Status == PawnStatus.Pawned ? item.Value * 1.20m : item.Value)</td> <!-- Show updated value if item is pawned -->
+
+                    <td>@item.Status</td>
+                    <td>
+                        @if (item.Status == PawnStatus.Pawned)
+                        {
+                            <!-- Redeem button for pawned items -->
+                            <a href="@Url.Action("Redeem", "Items", new { id = item.Id })" class="btn btn-primary">Redeem</a>
+                        }
+                        else if (item.Status == PawnStatus.Declined)
+                        {
+                            <!-- Delete button for declined items -->
+                            <a href="@Url.Action("Delete", "Items", new { id = item.Id })" class="btn btn-danger">Delete</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No items found.</p>
+}

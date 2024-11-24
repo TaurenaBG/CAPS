@@ -5,6 +5,7 @@
         Pawned,
         Redeemed,
         Sold,
-        Pending
+        Pending,
+        Declined
     }
 }

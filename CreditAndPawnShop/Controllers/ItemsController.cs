@@ -1,4 +1,5 @@
 ﻿using CAPS.DataModels;
+using CAPS.Global;
 using CAPS.Services;
 using CAPS.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -64,6 +65,58 @@ namespace CreditAndPawnShop.Controllers
             var itemDetails = await _itemService.FindItemByIdAsync(id);
            
             return View(itemDetails);
+        }
+        public async Task<IActionResult> MyItems()
+        {
+           
+            var user = await _userManager.GetUserAsync(User);
+
+           
+
+           
+            var items = await _itemService.GetUserPawnedAndDeclinedItemsAsync(user.Id);
+
+            
+            return View(items);
+        }
+        public async Task<IActionResult> Redeem(int id)
+        {
+            var item = await _itemService.FindItemByIdAsync(id); 
+           
+
+            var user = await _userManager.GetUserAsync(User);
+            
+
+           
+            var result = await _itemService.RedeemItemAsync(user, item);
+
+            if (result)
+            {
+                return RedirectToAction("MyItems");
+            }
+
+           
+            return RedirectToAction("InsufficientFunds");
+        }
+
+       
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var item = await _itemService.FindItemByIdAsync(id); 
+           
+
+            var user = await _userManager.GetUserAsync(User);
+           
+
+            
+            await _itemService.DeleteItemAsync(item);
+
+            return RedirectToAction("MyItems");
+        }
+        public async Task<IActionResult> InsufficientFunds()
+        {
+            return View();
         }
     }
 }
