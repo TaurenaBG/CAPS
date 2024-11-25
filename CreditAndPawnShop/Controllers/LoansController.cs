@@ -149,8 +149,6 @@ namespace CreditAndPawnShop.Controllers
             
             var success = await _loanService.DeleteLoanAsync(id);
 
-           
-
             
             return RedirectToAction("PayLoan");
         }
@@ -179,10 +177,7 @@ namespace CreditAndPawnShop.Controllers
         
         public async Task<IActionResult> PayLoanForm(PayViewModel model)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(model); 
-            //}
+           
 
             var currentUser = await _userManager.GetUserAsync(User);
             var success = await _loanService.PayLoanAsync(model, model.Amount, model.AppUserId);
@@ -201,12 +196,7 @@ namespace CreditAndPawnShop.Controllers
         {
             
             var loan = await _loanService.GetLoanByIdAsync(loanId);
-            if (loan == null)
-            {
-                return NotFound(); 
-            }
-
-            
+ 
             return View(loan);
         }
     }

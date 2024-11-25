@@ -52,6 +52,7 @@ namespace CAPS.Services
         public async Task<List<SelectListItem>> GetPawnShopsAsync()
         {
             var pawnShops = await _context.PawnShops
+                .Where(ps => ps.IsDeleted == false)
                 .Select(ps => new SelectListItem
                 {
                     Value = ps.Id.ToString(),
@@ -72,9 +73,6 @@ namespace CAPS.Services
             var item = await _context.PawnItems
                                       .FirstOrDefaultAsync(i => i.Id == itemId && !i.IsDeleted);
 
-            
-
-            
             item.Status = status;
 
             
@@ -91,17 +89,10 @@ namespace CAPS.Services
            
             var item = await FindItemByIdAsync(itemId);
 
-
-
-
             var adminUser = user;
-
             
             var pawnUser = await _userManager.FindByIdAsync(item.AppUserId);
 
-           
-
-            
             if (adminUser.CurrencyAmount < item.Value)
             {
                 return false; 
@@ -154,7 +145,19 @@ namespace CAPS.Services
             owner.CurrencyAmount += totalAmount;
 
                 _context.Update(user);
+
+            var payment = new Payment
+            {
+                Amount = totalAmount,
+                PaymentDate = DateTime.Now, 
+                IsDeleted = false, 
+                AppUserId = user.Id, 
+                PawnItemId = item.Id 
+            };
+
             
+            _context.Payments.Add(payment);
+
 
             await _context.SaveChangesAsync();
 
