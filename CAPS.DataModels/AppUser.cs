@@ -20,7 +20,7 @@ namespace CAPS.DataModels
         public List<Loan> Loans { get; set; } = new List<Loan>();
         public List<PawnItem> PawnedItems { get; set; } = new List<PawnItem>();
 
-        [NotMapped]
+        
         public List<PawnItem> BroughtItems { get; set; } = new List<PawnItem>();
     }
 }

@@ -16,9 +16,11 @@ namespace CreditAndPawnShop.Controllers
         private readonly IPawnShopService _pawnShopService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IItemService _itemService;
+        private readonly IPaymentService _paymentService;
 
         public AdminController(IPawnShopAdminService pawnShopAdminService,
             IPawnShopService pawnShopService,
+             IPaymentService paymentService,
             IItemService itemService,
             UserManager<AppUser> userManager)
         {
@@ -26,6 +28,7 @@ namespace CreditAndPawnShop.Controllers
             _pawnShopService = pawnShopService;
             _userManager = userManager;
             _itemService = itemService;
+            _paymentService = paymentService;
         }
 
         public async Task<IActionResult> Index()
@@ -76,10 +79,7 @@ namespace CreditAndPawnShop.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, PawnShopsViewModel model)
         {
-            if (id != model.Id)
-            {
-                return NotFound();
-            }
+            
 
             if (ModelState.IsValid)
             {
@@ -140,14 +140,11 @@ namespace CreditAndPawnShop.Controllers
 
         public async Task<IActionResult> DeclineItem(int itemId)
         {
-           
-                
+                         
                 await _itemService.UpdateItemStatusAsync(itemId, PawnStatus.Declined);
-
-                
+             
                 return RedirectToAction(nameof(ManageItems));
-            
-            
+    
         }
 
         
@@ -158,6 +155,19 @@ namespace CreditAndPawnShop.Controllers
 
            
             return View(pendingItems);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ManagePayments()
+        {
+            var payments = await _paymentService.GetAllPaymentsAsync();
+            return View(payments);
+        }
+
+        [HttpPost]
+        public IActionResult ClearPayments()
+        {
+            _paymentService.ClearAllPaymentsAsync(); 
+            return RedirectToAction("ManagePayments");
         }
     }
 

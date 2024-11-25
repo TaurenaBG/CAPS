@@ -31,7 +31,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="PawnShops" asp-action="Index">PawnShops</a>
                         </li>
 
-                        <!-- Items Menu visible for regular users (non-admin) -->
+                        <!-- Items Menu visible for regular users  -->
                         @if (SignInManager.IsSignedIn(User) && !User.IsInRole("Admin"))
                         {
                             <li class="nav-item dropdown">
@@ -47,7 +47,7 @@
                             </li>
                         }
 
-                        <!-- Loans Menu visible for regular users (non-admin) -->
+                        <!-- Loans Menu visible for regular users  -->
                         @if (SignInManager.IsSignedIn(User) && !User.IsInRole("Admin"))
                         {
                             <li class="nav-item dropdown">
@@ -72,6 +72,9 @@
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Loans" asp-action="ManageLoans">Manage Loans</a></li>
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="ManageItems">Manage Items</a></li>
                                 </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="ManagePayments">Payments</a>
                             </li>
                         }
                     </ul>

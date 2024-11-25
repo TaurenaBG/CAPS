@@ -46,7 +46,13 @@ namespace CAPS.Data.Data
                 }
             );
 
-           
+            modelBuilder.Entity<AppUser>()
+           .HasMany(u => u.BroughtItems) 
+           .WithOne(i => i.AppUser) 
+           .HasForeignKey(i => i.AppUserId)
+           .OnDelete(DeleteBehavior.Cascade);
+
+
         }
 
     }

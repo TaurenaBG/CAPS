@@ -1,0 +1,51 @@
+﻿@using CAPS.DataModels
+@model IEnumerable<Payment>
+
+@{
+    ViewData["Title"] = "ManagePayments";
+}
+
+<h2> Manage Payments</h2>
+
+<div>
+    <!-- Payments Table -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Amount</th>
+                <th>Payment Date</th>
+                <th>User</th>
+                <th>Pawn Item ID</th> 
+                <th>Loan ID</th> 
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var payment in Model)
+            {
+                <tr>
+                    <td>@payment.Amount</td>
+                    <td>@payment.PaymentDate.ToString("g")</td>
+                    <td>@payment.AppUser.Email</td> 
+                    <!-- Show Pawn Item ID if available, else leave empty space -->
+                    <td>@(payment.PawnItem != null ? payment.PawnItem.Id.ToString() : "")</td>
+
+                    <!-- Show Loan ID if PawnItem is null, else leave empty space -->
+                    <td>@(payment.PawnItem == null ? (payment.LoanId.HasValue ? payment.LoanId.ToString() : "") : "")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Clear Payments Button -->
+    <form method="post" asp-action="ClearPayments" onsubmit="return confirm('Are you sure you want to clear all payments?')">
+        <button type="submit" class="btn btn-danger">Clear Payments</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        function clearPage() {
+            document.querySelector('tbody').innerHTML = '';
+        }
+    </script>
+}

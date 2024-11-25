@@ -1,21 +1,16 @@
 ﻿@using CAPS.DataModels;
-@model List<PawnItem>
+@model IEnumerable<PawnItem>
 
-@{
-    ViewData["Title"] = "Brought Items";
-}
+<h2>My Brought Items</h2>
 
-<h2>Brought Items</h2>
-
-@if (Model != null && Model.Any())
+@if (Model.Any())
 {
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Value</th>
-               
+                <th>Item Name</th>
+                <th>Price</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -23,9 +18,8 @@
             {
                 <tr>
                     <td>@item.Name</td>
-                    <td>@item.Description</td>
                     <td>@item.Value</td>
-                    
+                    <td>@item.Status</td>
                 </tr>
             }
         </tbody>
@@ -33,5 +27,5 @@
 }
 else
 {
-    <p>You have not bought any items yet.</p>
+    <p>No brought items found.</p>
 }

@@ -4,6 +4,7 @@ using CAPS.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CAPS.Data.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241125175017_BroughtItems")]
+    partial class BroughtItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,9 +156,6 @@ namespace CAPS.Data.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AppUserId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Category")
                         .HasColumnType("int");
 
@@ -188,8 +188,6 @@ namespace CAPS.Data.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
-
-                    b.HasIndex("AppUserId1");
 
                     b.HasIndex("PawnShopId");
 
@@ -440,14 +438,10 @@ namespace CAPS.Data.Data.Migrations
             modelBuilder.Entity("CAPS.DataModels.PawnItem", b =>
                 {
                     b.HasOne("CAPS.DataModels.AppUser", "AppUser")
-                        .WithMany("BroughtItems")
+                        .WithMany("PawnedItems")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("CAPS.DataModels.AppUser", null)
-                        .WithMany("PawnedItems")
-                        .HasForeignKey("AppUserId1");
 
                     b.HasOne("CAPS.DataModels.PawnShop", "PawnShop")
                         .WithMany("PawnedItems")
@@ -536,8 +530,6 @@ namespace CAPS.Data.Data.Migrations
 
             modelBuilder.Entity("CAPS.DataModels.AppUser", b =>
                 {
-                    b.Navigation("BroughtItems");
-
                     b.Navigation("Loans");
 
                     b.Navigation("PawnedItems");
