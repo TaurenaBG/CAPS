@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CAPS.ViewModels", "CAPS.Vie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CAPS.Global", "CAPS.Global\CAPS.Global.csproj", "{319DCEF0-7B4D-4F40-B89F-C2DB24723ED7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CAPS.Services", "CAPS.Services\CAPS.Services.csproj", "{CD714A96-65B9-4839-8468-7B8C4A26EDD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CAPS.Services", "CAPS.Services\CAPS.Services.csproj", "{CD714A96-65B9-4839-8468-7B8C4A26EDD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CAPS.Data", "CAPS.Data\CAPS.Data.csproj", "{D3AAE4B4-DB5A-4684-BED4-90185DEF919D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CAPS.Data", "CAPS.Data\CAPS.Data.csproj", "{D3AAE4B4-DB5A-4684-BED4-90185DEF919D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CAPS.UnitTesting", "CAPS.UnitTesting\CAPS.UnitTesting.csproj", "{17E44725-543A-419C-B721-EE6DD9E7242F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{D3AAE4B4-DB5A-4684-BED4-90185DEF919D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3AAE4B4-DB5A-4684-BED4-90185DEF919D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3AAE4B4-DB5A-4684-BED4-90185DEF919D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17E44725-543A-419C-B721-EE6DD9E7242F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17E44725-543A-419C-B721-EE6DD9E7242F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17E44725-543A-419C-B721-EE6DD9E7242F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17E44725-543A-419C-B721-EE6DD9E7242F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
