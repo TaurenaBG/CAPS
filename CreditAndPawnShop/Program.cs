@@ -53,6 +53,7 @@ namespace CreditAndPawnShop
                        
 
             var app = builder.Build();
+
             using (var data = app.Services.CreateScope())
             {
                 var services = data.ServiceProvider;

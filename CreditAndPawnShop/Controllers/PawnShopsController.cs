@@ -1,15 +1,17 @@
 ﻿using CAPS.Data.Data;
 using CAPS.Services;
 using CAPS.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CreditAndPawnShop.Controllers
 {
+    [AllowAnonymous]
     public class PawnShopsController : Controller
     {
         private readonly IPawnShopService _pawnShopService;
-
+         
         
         public PawnShopsController(IPawnShopService pawnShopService)
         {

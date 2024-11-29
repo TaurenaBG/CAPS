@@ -2,11 +2,13 @@
 using CAPS.Global;
 using CAPS.Services;
 using CAPS.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CreditAndPawnShop.Controllers
 {
+    [Authorize]
     public class ItemsController : Controller
     {
 

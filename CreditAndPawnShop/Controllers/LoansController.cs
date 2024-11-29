@@ -61,6 +61,8 @@ namespace CreditAndPawnShop.Controllers
 
             return View("LoanDetails", loanDetailsViewModel); 
         }
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ManageLoans()
         {
             var pendingLoans = await _loanService.GetPendingLoansAsync();
@@ -68,6 +70,7 @@ namespace CreditAndPawnShop.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ApproveLoan(int id)
         {
             
@@ -87,6 +90,7 @@ namespace CreditAndPawnShop.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeclineLoan(int id)
         {
             bool success = await _loanService.DeclineLoanAsync(id);
@@ -101,6 +105,7 @@ namespace CreditAndPawnShop.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteLoan(int id)
         {
             bool success = await _loanService.DeleteLoanAsync(id);

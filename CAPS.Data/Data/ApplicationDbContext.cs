@@ -22,29 +22,7 @@ namespace CAPS.Data.Data
             base.OnModelCreating(modelBuilder);
 
            
-            //modelBuilder.Entity<PawnShop>().HasData(
-            //    new PawnShop
-            //    {
-            //        Id = 1,
-            //        Name = "GoldenVarna",
-            //        City = "Varna",
-            //        LocationUrl = "https://www.google.com/maps?q=43.2141,27.9147"
-            //    },
-            //    new PawnShop
-            //    {
-            //        Id = 2,
-            //        Name = "MainaShop",
-            //        City = "Plovdiv",
-            //        LocationUrl = "https://www.google.com/maps?q=42.1354,24.7455"
-            //    },
-            //    new PawnShop
-            //    {
-            //        Id = 3,
-            //        Name = "Viliger",
-            //        City = "Sofia",
-            //        LocationUrl = "https://www.google.com/maps?q=42.6977,23.3219"
-            //    }
-            //);
+            
 
             modelBuilder.Entity<AppUser>()
            .HasMany(u => u.BroughtItems) 
