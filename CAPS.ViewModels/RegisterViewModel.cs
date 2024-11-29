@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using static CAPS.Global.GlobalConstants;
 namespace CAPS.ViewModels
 {
     public class RegisterViewModel
@@ -13,7 +13,7 @@ namespace CAPS.ViewModels
         public string Password { get; set; }
 
         [Required]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = UserPasswordConfirmationErrorMsg)]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 

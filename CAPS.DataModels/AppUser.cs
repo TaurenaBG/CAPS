@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using static CAPS.Global.GlobalConstants;
 
 namespace CAPS.DataModels
 {
@@ -11,10 +12,12 @@ namespace CAPS.DataModels
 
         public bool IsDeleted { get; set; }
 
+        [MaxLength(UserFullNameMaxLenght,ErrorMessage = UserFullNameMaxLenghtErrorMsg)]
         public string? FullName { get; set; }
 
         public string? ReturnUrl { get; set; }
 
+        [Range(CurrencyMinAmount, CurrencyMaxAmount, ErrorMessage = CurrencyNotInRange)]
         public decimal CurrencyAmount { get; set; }
 
         public List<Loan> Loans { get; set; } = new List<Loan>();

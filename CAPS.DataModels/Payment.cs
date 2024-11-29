@@ -9,6 +9,7 @@ public class Payment
     public int Id { get; set; }
 
     [Required(ErrorMessage = IsRequiredMsg)]
+    [Range(CurrencyMinAmount, CurrencyMaxAmount, ErrorMessage = CurrencyNotInRange)]
     public decimal Amount { get; set; }
 
     [Required(ErrorMessage = IsRequiredMsg)]

@@ -11,12 +11,15 @@ namespace CAPS.DataModels
         public int Id { get; set; }
 
         [Required(ErrorMessage = IsRequiredMsg)]
+        [MaxLength(ItemNameMaxLenght, ErrorMessage = ItemNameNotInRangeErrorMsg)]
         public string Name { get; set; } = null!;
 
         [Required(ErrorMessage = IsRequiredMsg)]
+        [MaxLength(ItemDescriptionMaxLenght, ErrorMessage = ItemDescriptionLenghtNotInRangeErrorMsg)]
         public string Description { get; set; } = null!;
 
         [Required(ErrorMessage = IsRequiredMsg)]
+        [Range(CurrencyMinAmount, CurrencyMaxAmount, ErrorMessage = CurrencyNotInRange)]
         public decimal Value { get; set; }
 
         [Required]

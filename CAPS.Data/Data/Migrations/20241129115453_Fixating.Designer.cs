@@ -4,6 +4,7 @@ using CAPS.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CAPS.Data.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241129115453_Fixating")]
+    partial class Fixating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,6 +229,32 @@ namespace CAPS.Data.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PawnShops");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "Varna",
+                            IsDeleted = false,
+                            LocationUrl = "https://www.google.com/maps?q=43.2141,27.9147",
+                            Name = "GoldenVarna"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City = "Plovdiv",
+                            IsDeleted = false,
+                            LocationUrl = "https://www.google.com/maps?q=42.1354,24.7455",
+                            Name = "MainaShop"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            City = "Sofia",
+                            IsDeleted = false,
+                            LocationUrl = "https://www.google.com/maps?q=42.6977,23.3219",
+                            Name = "Viliger"
+                        });
                 });
 
             modelBuilder.Entity("CAPS.DataModels.Payment", b =>

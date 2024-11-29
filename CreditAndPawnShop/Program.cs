@@ -53,6 +53,14 @@ namespace CreditAndPawnShop
                        
 
             var app = builder.Build();
+            using (var data = app.Services.CreateScope())
+            {
+                var services = data.ServiceProvider;
+                var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                var context = services.GetRequiredService<ApplicationDbContext>();
+
+                await Seeder.SeedDBAsync(context, userManager);
+            }
 
             using (var scope = app.Services.CreateScope())
             {
@@ -61,7 +69,7 @@ namespace CreditAndPawnShop
                 var userManager = services.GetRequiredService<UserManager<AppUser>>();
                 var context = services.GetRequiredService<ApplicationDbContext>();
 
-                await PawnedItemSeeder.SeedPawnedItemsAsync(context, userManager);
+
 
                 if (!await roleManager.RoleExistsAsync("Admin"))
                 {
@@ -79,6 +87,7 @@ namespace CreditAndPawnShop
                     await AdminRoleSeeder.SeedAdminUserAsync(userManager, roleManager);
                 }
 
+               
 
             }
             
