@@ -111,6 +111,7 @@ namespace CAPS.Services
             }
 
             
+
             owner.CurrencyAmount -= loan.Amount;  
             loan.AppUser.CurrencyAmount += loan.Amount;  
             loan.LoanStatus = LoanStatus.Aproved; 
