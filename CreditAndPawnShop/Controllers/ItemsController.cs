@@ -139,7 +139,7 @@ namespace CreditAndPawnShop.Controllers
             if (success)
             {
                 
-                return RedirectToAction("Index", "Home"); 
+                return RedirectToAction("Buy", "Items"); 
             }
             else
             {

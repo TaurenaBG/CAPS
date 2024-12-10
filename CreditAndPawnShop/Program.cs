@@ -36,10 +36,10 @@ namespace CreditAndPawnShop
 
 
 
-            builder.Services.AddAuthorization(options =>
-            {
-                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
-            });
+            //builder.Services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+            //});
 
             builder.Services.AddScoped<IPaymentService, PaymentService>();
             builder.Services.AddScoped<IItemService, ItemService>();
